@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<web-app 
+	xmlns ="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<display-name>ClinicPet</display-name>
+	
+	<description>Simple</description>
+	
+	<servlet>
+		<servlet-name>ClinicServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.ClinicServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClinicServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ClientCreateServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.ClientCreateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientCreateServlet</servlet-name>
+		<url-pattern>/client/create</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ClientEditServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.ClientEditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientEditServlet</servlet-name>
+		<url-pattern>/client/edit</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ClientDeleteServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.ClientDeleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientDeleteServlet</servlet-name>
+		<url-pattern>/client/delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ClientSearchServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.ClientSearchServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ClientSearchServlet</servlet-name>
+		<url-pattern>/client/search</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PetCreateServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.PetCreateServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PetCreateServlet</servlet-name>
+		<url-pattern>/pet/create</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PetEditServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.PetEditServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PetEditServlet</servlet-name>
+		<url-pattern>/pet/edit</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PetDeleteServlet</servlet-name>
+		<servlet-class>ru.lesson.servlets.PetDeleteServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PetDeleteServlet</servlet-name>
+		<url-pattern>/pet/delete</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.png</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.css</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>*.js</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
