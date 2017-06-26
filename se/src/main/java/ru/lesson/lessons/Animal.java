@@ -2,11 +2,26 @@ package ru.lesson.lessons;
 
 public class Animal implements Pet{
 
+    /** Имя животного */
     private final String name;
+
+    /** id животного */
     private final int id;
+
+    /** id владельца животного */
     private final int clientId;
+
+    /** id типа животного */
     private final int typeId;
 
+    /**
+     *
+     ** Конструктор
+     * @param id id животного
+     * @param clientId id владельца
+     * @param name имя животного
+     * @param typeId id типа животного
+     */
     public Animal(int id, int clientId, String name, int typeId) {
         if(name.isEmpty()) throw new IllegalArgumentException("Pet name can not be empty");
         this.id = id;
@@ -35,6 +50,7 @@ public class Animal implements Pet{
         return this.typeId;
     }
 
+    @Override
     public PetType getType() {
         return PetType.getTypeById(this.typeId);
     }

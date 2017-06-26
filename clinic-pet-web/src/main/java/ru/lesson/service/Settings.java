@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Класс настроек приложения
+ */
 public class Settings {
 
     private static final Settings INSTANCE = new Settings();
@@ -17,7 +20,7 @@ public class Settings {
         }
     }
 
-    public static Settings getInstance() {return INSTANCE;  };
+    public static Settings getInstance() {return INSTANCE;}
 
     public String value(String key){
         return this.properties.getProperty(key);

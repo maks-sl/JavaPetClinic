@@ -1,7 +1,8 @@
 package ru.lesson.store;
 
-import ru.lesson.lessons.*;
-import ru.lesson.models.Client;
+import ru.lesson.lessons.Pet;
+import ru.lesson.lessons.PetGenerator;
+import ru.lesson.lessons.PetType;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,16 +11,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MemoryPetStorage implements PetStorage {
 
+    /** Набор животных */
     private final ConcurrentHashMap<Integer, Pet> pets = new ConcurrentHashMap<>();
+
+    /** Переменная хранящая id последнего добавленного животного */
     final AtomicInteger ids = new AtomicInteger();
+
+    /**
+     * Получение следующего порядкового id животного
+     * Используется при добавлении нового животного
+     * @return id для нового животного
+     */
+    private int getNextId() {
+        return this.ids.incrementAndGet();
+    }
 
     @Override
     public Collection<Pet> values() {
         return this.pets.values();
-    }
-
-    private int getNextId() {
-        return this.ids.incrementAndGet();
     }
 
     @Override

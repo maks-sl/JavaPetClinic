@@ -1,8 +1,17 @@
 package ru.lesson.lessons;
 
+/**
+ * Реализация собака
+ */
 public class Dog implements Pet{
     private Pet pet;
 
+    /**
+     * Конструктор
+     * @param id id животного
+     * @param clientId id владельца
+     * @param name имя животного
+     */
     public Dog(int id, int clientId, String name) {
         this.pet = new Animal(id, clientId, name, PetType.getIdByPetType(PetType.DOG));
     }
@@ -25,7 +34,6 @@ public class Dog implements Pet{
     @Override
     public PetType getType() {
         return this.pet.getType();
-//        return this.getClass().getSimpleName();
     }
 
     @Override

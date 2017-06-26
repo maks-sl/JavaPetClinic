@@ -3,7 +3,6 @@ package ru.lesson.store;
 import ru.lesson.lessons.Pet;
 import ru.lesson.lessons.PetGenerator;
 import ru.lesson.lessons.PetType;
-import ru.lesson.models.Client;
 import ru.lesson.service.Settings;
 
 import java.sql.*;
@@ -12,12 +11,17 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by User on 22.06.2017.
+ * Класс хранения животных в БД
+ * Назначение @Override методов описано в интерфейсе PetStorage
  */
 public class JdbcPetStorage implements PetStorage {
 
+    /** Соединение с БД */
     private final Connection connection;
 
+    /**
+     * Конструктор соединения
+     */
     public JdbcPetStorage() {
         final Settings settings = Settings.getInstance();
         try {
@@ -32,6 +36,14 @@ public class JdbcPetStorage implements PetStorage {
         }
     }
 
+    /**
+     * Принимает результаты запроса к БД в переменной rs,
+     * после чего перебирает строки и на основании их добавляет животных в коллекцию toAdd
+     * @param rs результат выборки из БД
+     * @param toAdd массив для дополнения животными и возврата его в качестве результата
+     * @return коллекция toAdd, дополненная животными из выборки rs
+     * @throws SQLException ошибка при доступе к полям результата запроса
+     */
     private Collection<Pet> petsFromResult(final ResultSet rs, Collection<Pet> toAdd) throws SQLException {
         while (rs.next()){
             int id = rs.getInt("id");
@@ -49,7 +61,7 @@ public class JdbcPetStorage implements PetStorage {
 
     @Override
     public Collection<Pet> values() {
-        final List<Pet> pets = new ArrayList<Pet>();
+        final List<Pet> pets = new ArrayList<>();
         try (final Statement statement = this.connection.createStatement();
              final ResultSet rs = statement.executeQuery("SELECT * FROM pet")) {
                 this.petsFromResult(rs, pets);
@@ -61,8 +73,8 @@ public class JdbcPetStorage implements PetStorage {
 
     @Override
     public Collection<Pet> getByClientId(int clientId) {
-        final List<Pet> pets = new ArrayList<Pet>();
-        try (final PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM pet WHERE client_id = ?");) {
+        final List<Pet> pets = new ArrayList<>();
+        try (final PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM pet WHERE client_id = ?")) {
             statement.setInt(1, clientId);
             final ResultSet rs = statement.executeQuery();
             this.petsFromResult(rs, pets);
@@ -117,7 +129,7 @@ public class JdbcPetStorage implements PetStorage {
     public Pet get(int id) {
         try (final PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM pet WHERE id=(?)")){
             statement.setInt(1, id);
-            try (final ResultSet rs = statement.executeQuery();) {
+            try (final ResultSet rs = statement.executeQuery()) {
                 while (rs.next()){
                     int pid = rs.getInt("id");
                     int cid =  rs.getInt("client_id");

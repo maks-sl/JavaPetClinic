@@ -6,18 +6,31 @@ import ru.lesson.models.Client;
 import java.util.Collection;
 
 /**
- * Created by User on 17.06.2017.
+ * Класс-Singleton для реализации хранилища клиентов
  */
 public class ClientCache implements ClientStorage {
 
-    private static final ClientCache INSTANCE = new ClientCache();
+    /** выбор реализации хранилища */
     private final ClientStorage clientStorage = new JdbcClientStorage();
 //    private final ClientStorage clientStorage = new MemoryClientStorage();
 
+    /** инициализация единственного экземпляра */
+    private static final ClientCache INSTANCE = new ClientCache();
+
+    /**
+     * закрытый конструктор, запрет на создание экземпляров извне класса
+     */
+    private ClientCache(){}
+
+    /**
+     * Вернуть экземпляр singleton
+     * @return экземпляр singleton
+     */
     public static ClientCache getInstance() {
         return INSTANCE;
     }
 
+    @Override
     public Collection<Client> values() {
         return this.clientStorage.values();
     }
@@ -27,30 +40,37 @@ public class ClientCache implements ClientStorage {
         return this.clientStorage.add(name, surname, email, gender);
     }
 
+    @Override
     public void edit(final Client client) {
         this.clientStorage.edit(client);
     }
 
+    @Override
     public void delete(final int id) {
         this.clientStorage.delete(id);
     }
 
+    @Override
     public Client get(final int id) {
         return this.clientStorage.get(id);
     }
 
+    @Override
     public Collection<Client> searchOr(final String clientName, final String petName) {
         return this.clientStorage.searchOr(clientName, petName);
     }
 
+    @Override
     public Collection<Client> searchAnd(final String clientName, final String petName) {
         return this.clientStorage.searchAnd(clientName, petName);
     }
 
+    @Override
     public Collection<Client> searchByName(final String clientName) {
         return this.clientStorage.searchByName(clientName);
     }
 
+    @Override
     public Collection<Client> searchByPetName(final String petName) {
         return this.clientStorage.searchByPetName(petName);
     }
@@ -59,6 +79,5 @@ public class ClientCache implements ClientStorage {
     public void close() {
         this.clientStorage.close();
     }
-
 
 }

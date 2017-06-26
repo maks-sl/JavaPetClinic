@@ -7,16 +7,20 @@ import ru.lesson.service.Settings;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 
 /**
- * Created by User on 22.06.2017.
+ * Класс хранения клиентов в БД
+ * Назначение @Override методов описано в интерфейсе ClientStorage
  */
 public class JdbcClientStorage implements ClientStorage {
 
+    /** Соединение с БД */
     private final Connection connection;
 
+    /**
+     * Конструктор соединения
+     */
     public JdbcClientStorage() {
         final Settings settings = Settings.getInstance();
         try {
@@ -31,6 +35,15 @@ public class JdbcClientStorage implements ClientStorage {
         }
     }
 
+    /**
+     *
+     * Принимает результаты запроса к БД в переменной rs,
+     * после чего перебирает строки и на основании их добавляет клиентов в коллекцию toAdd
+     * @param rs результат выборки из БД
+     * @param toAdd массив для дополнения клиентами и возврата его в качестве результата
+     * @return коллекция toAdd, дополненная клиентами из выборки rs
+     * @throws SQLException ошибка при доступе к полям запроса
+     */
     private Collection<Client> clientsFromResult(final ResultSet rs, Collection<Client> toAdd) throws SQLException {
         while (rs.next()){
             int id = rs.getInt("id");
@@ -47,7 +60,7 @@ public class JdbcClientStorage implements ClientStorage {
 
     @Override
     public Collection<Client> values() {
-        final List<Client> clients = new ArrayList<Client>();
+        final List<Client> clients = new ArrayList<>();
         try (final Statement statement = this.connection.createStatement();
              final ResultSet rs = statement.executeQuery("SELECT * FROM client")) {
             this.clientsFromResult(rs, clients);
@@ -105,7 +118,7 @@ public class JdbcClientStorage implements ClientStorage {
     public Client get(int id) {
         try (final PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM client WHERE id=(?)")){
             statement.setInt(1, id);
-            try (final ResultSet rs = statement.executeQuery();) {
+            try (final ResultSet rs = statement.executeQuery()) {
                 while (rs.next()){
                     int cid = rs.getInt("id");
                     String name =  rs.getString("name");
@@ -143,10 +156,10 @@ public class JdbcClientStorage implements ClientStorage {
 
     @Override
     public Collection<Client> searchByName(String clientName) {
-        final List<Client> toReturn = new ArrayList<Client>();
+        final List<Client> toReturn = new ArrayList<>();
         try (final PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM client WHERE lower(name) || ' ' || lower(surname) like (?)")){
             statement.setString(1, '%'+clientName.toLowerCase()+'%');
-            try (final ResultSet rs = statement.executeQuery();) {
+            try (final ResultSet rs = statement.executeQuery()) {
                 this.clientsFromResult(rs, toReturn);
             }
         } catch (SQLException e) {
@@ -160,7 +173,7 @@ public class JdbcClientStorage implements ClientStorage {
 
         Collection<Client> toReturn = new ArrayList<>();
         for (Client client: this.values()){
-            if(petName != ""){
+            if(!"".equals(petName)){
                 for (Pet pet: client.getPets()){
                     if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(client);
                 }

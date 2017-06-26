@@ -1,26 +1,26 @@
 package ru.lesson.lessons;
 
 /**
- * Список доступных типов животных
+ * Перечисление типов животных
  */
 public enum PetType {
     /** Кот */
     CAT,
     /** Собака */
     DOG,
-    /** Животное не из списка */
+    /** Какое-то животное */
     SOME_PET;
 
     /**
-     * Строковые константы для каждого типа
+     * Id типов для хранения в БД
      */
     private static final int CONST_CAT = 1;
     private static final int CONST_DOG = 2;
     private static final int CONST_SOME_PET = 0;
 
     /**
-     * Получить тип животного по id
-     * @param typeId Строка выбора типа
+     * Возвращает тип животного по id
+     * @param typeId id для храниния в БД
      * @return Тип животного
      */
     public static PetType getTypeById(int typeId) {
@@ -33,6 +33,12 @@ public enum PetType {
                 return SOME_PET;
         }
     }
+
+    /**
+     * Возвращает id типа животного
+     * @param petType тип животного
+     * @return id типа животного
+     */
 
     public static int getIdByPetType (PetType petType) {
         switch (petType) {

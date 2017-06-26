@@ -1,11 +1,6 @@
 package ru.lesson.servlets;
 
-import ru.lesson.lessons.Cat;
-import ru.lesson.lessons.Dog;
-import ru.lesson.lessons.Pet;
 import ru.lesson.lessons.PetType;
-import ru.lesson.models.Client;
-import ru.lesson.store.ClientCache;
 import ru.lesson.store.PetCache;
 
 import javax.servlet.RequestDispatcher;
@@ -16,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 18.06.2017.
+ * Сервлет создания животного
  */
 public class PetCreateServlet extends HttpServlet {
 
@@ -38,5 +33,11 @@ public class PetCreateServlet extends HttpServlet {
         req.setAttribute("petTypes", PetType.values());
         RequestDispatcher disp = req.getRequestDispatcher("/views/pet/PetCreate.jsp");
         disp.forward(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        PET_CACHE.close();
     }
 }

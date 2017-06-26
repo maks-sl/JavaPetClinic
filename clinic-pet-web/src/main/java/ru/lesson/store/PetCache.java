@@ -6,17 +6,29 @@ import ru.lesson.lessons.PetType;
 import java.util.Collection;
 
 /**
- * Created by User on 23.06.2017.
+ * Класс-Singleton для реализации хранилища животных
  */
 public class PetCache implements PetStorage {
 
+    /** выбор реализации хранилища */
+    private final PetStorage petStorage = new JdbcPetStorage();
+//    private final PetStorage petStorage = new MemoryPetStorage();
+
+    /** инициализация единственного экземпляра */
     private static final PetCache INSTANCE = new PetCache();
 
+    /**
+     * закрытый конструктор, запрет на создание экземпляров извне класса
+     */
+    private PetCache(){}
+
+    /**
+     * Вернуть экземпляр singleton
+     * @return экземпляр singleton
+     */
     public static PetCache getInstance() {
         return INSTANCE;
     }
-    private final PetStorage petStorage = new JdbcPetStorage();
-//    private final PetStorage petStorage = new MemoryPetStorage();
 
     @Override
     public Collection<Pet> values() {

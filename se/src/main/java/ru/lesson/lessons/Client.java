@@ -1,7 +1,12 @@
 package ru.lesson.lessons;
 
-import java.util.*;
+import java.util.Set;
 
+/**
+ * Класс клиента для реализации клиники из интерфейса командной строки
+
+ * НЕ используется для Web-проекта
+ */
 public class Client{
 
     /** имя клиента */
@@ -10,15 +15,28 @@ public class Client{
     /** питомцы клиента */
     private Set<Pet> pets;
 
+    /**
+     * Конструктор
+     * @param id id клиента
+     * @param pets Set-коллекция животных
+     */
     public Client(String id, Set<Pet> pets) {
         this.id = id;
         this.pets = pets;
     }
 
+    /**
+     * Вернуть id клиента
+     * @return id клиента
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Вернуть животных клиента
+     * @return Set-коллекция животных
+     */
     public Set<Pet> getPets() {
         return pets;
     }
@@ -51,12 +69,12 @@ public class Client{
         return id != null ? id.hashCode() : 0;
     }
 
-    /**
-     * добавляет питомца клиенту
-     * @param type тип животного - cat или dog
-     * @param name имя для животного
-     * @throws Exception  в случае если у клиента уже есть животное с таким именем
-     */
+//    /**
+//     * добавляет питомца клиенту
+//     * @param type тип животного - cat или dog
+//     * @param name имя для животного
+//     * @throws Exception  в случае если у клиента уже есть животное с таким именем
+//     */
 //    public synchronized void addPet(String type, String name) throws Exception {
 //        for(Pet p: this.pets){
 //            if(p.getName().equals(name)) {
@@ -99,12 +117,12 @@ public class Client{
         this.pets.remove(petToRemove);
     }
 
-    /**
-     * удаляет питомца у клиента
-     * @param currentName имя по которому будем переименовывать
-     * @param newName новое имя
-     * @throws Exception если питомца с таким именем currentName нет
-     */
+//    /**
+//     * удаляет питомца у клиента
+//     * @param currentName имя по которому будем переименовывать
+//     * @param newName новое имя
+//     * @throws Exception если питомца с таким именем currentName нет
+//     */
 //    public synchronized void renamePet(String currentName, String newName) throws Exception{
 //        Pet petToRename = this.findPetByName(currentName);
 //        petToRename.setName(newName);

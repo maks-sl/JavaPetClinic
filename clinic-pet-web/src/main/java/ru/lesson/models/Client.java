@@ -4,13 +4,10 @@ import ru.lesson.lessons.Pet;
 import ru.lesson.store.PetCache;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Класс клиента
+ */
 public class Client {
 
     /** id клиента */
@@ -28,6 +25,14 @@ public class Client {
     private final PetCache PET_CACHE = PetCache.getInstance();
 
 
+    /**
+     * Конструктор
+     * @param id id клиента
+     * @param name имя клиента
+     * @param surname фамилия клиента
+     * @param email электронная почта клиента
+     * @param gender пол клиента
+     */
     public Client(int id, String name, String surname, String email, int gender) {
         if(name.isEmpty() || surname.isEmpty() || email.isEmpty()) throw new IllegalArgumentException("Some of the arguments wrong");
         this.id = id;
@@ -57,17 +62,21 @@ public class Client {
         return gender;
     }
 
+    /**
+     * Вернуть полное имя
+     * @return полное имя в формате "имя фамилия"
+     */
     public String getFullName(){
         return this.name + " " + this.surname;
     }
 
+    /**
+     * Вернуть набор животных для данного владельца
+     * @return коллекция животных клиента
+     */
     public Collection<Pet> getPets() {
         return this.PET_CACHE.getByClientId(this.id);
     }
-
-    /*public void addPet(Pet pet){
-        this.PET_CACHE.add(pet);
-    }*/
 
     @Override
     public String toString() {

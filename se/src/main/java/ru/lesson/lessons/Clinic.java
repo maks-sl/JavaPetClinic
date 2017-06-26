@@ -1,7 +1,14 @@
 package ru.lesson.lessons;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+/**
+ * Класс для реализации клиники из интерфейса командной строки
+ * НЕ используется для Web-проекта
+ */
 public class Clinic{
 
     /** клиенты клиники */
@@ -9,10 +16,18 @@ public class Clinic{
     /** пустой клиент */
     private final Client emptyClient = new Client("", new HashSet<Pet>());
 
+    /**
+     * Конструктор
+     * @param clients Set-коллекция клиентов
+     */
     public Clinic(Set<Client> clients){
         this.clients = clients;
     }
 
+    /**
+     * вернуть экземпляр клиента-пустышки
+     * @return пустой клиент
+     */
     public Client getEmptyClient() {
         return emptyClient;
     }
@@ -23,7 +38,7 @@ public class Clinic{
 
     /**
      * Добавляет клиента в список clients
-     * @param client
+     * @param client клиент для добавления
      * @return true в случае удачи и false в случае неудачи
      * @throws Exception в случае если клиент с таким именем уже есть
      */
@@ -68,7 +83,7 @@ public class Clinic{
      */
     public List<Client> findClientsByPetName(String petName) {
 
-        List<Client> toReturn = new ArrayList<Client>();
+        List<Client> toReturn = new ArrayList<>();
         for (Client client: this.clients) {
             for (Pet pet: client.getPets()){
                 if(pet.getName().equals(petName)){

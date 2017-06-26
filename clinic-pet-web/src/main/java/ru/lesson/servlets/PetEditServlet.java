@@ -1,8 +1,8 @@
 package ru.lesson.servlets;
 
-import ru.lesson.lessons.*;
-import ru.lesson.models.Client;
-import ru.lesson.store.ClientCache;
+import ru.lesson.lessons.Pet;
+import ru.lesson.lessons.PetGenerator;
+import ru.lesson.lessons.PetType;
 import ru.lesson.store.PetCache;
 
 import javax.servlet.RequestDispatcher;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 18.06.2017.
+ * Сервлет изменения животного
  */
 public class PetEditServlet extends HttpServlet {
 
@@ -38,6 +38,11 @@ public class PetEditServlet extends HttpServlet {
         Pet newPet = PetGenerator.createPet( currentPet.getId(), currentPet.getClientId(), petName, PetType.getTypeByName(petTypeName) );
         this.PET_CACHE.edit(newPet);
         resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/edit?id="+newPet.getClientId()));
+    }
 
+    @Override
+    public void destroy() {
+        super.destroy();
+        PET_CACHE.close();
     }
 }

@@ -11,12 +11,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MemoryClientStorage implements ClientStorage {
 
+    /** Набор клиентов */
     private final ConcurrentHashMap<Integer, Client> clients = new ConcurrentHashMap<>();
+
+    /** переменная хранящая id последнего добавленного клиента */
     final AtomicInteger ids = new AtomicInteger();
 
-    //relation with Pets
+    /** Singleton животных */
     private final PetCache PET_CACHE = PetCache.getInstance();
 
+    /**
+     * Получение следующего порядкового id клиента
+     * Используется при добавлении нового клиента
+     * @return id для нового клиента
+     */
     private int getNextId() {
         return this.ids.incrementAndGet();
     }
@@ -71,7 +79,7 @@ public class MemoryClientStorage implements ClientStorage {
     public Collection<Client> searchByName(String clientName) {
         Collection<Client> toReturn = new ArrayList<>();
         for (Client client: this.clients.values()){
-            if(clientName != ""){
+            if(!"".equals(clientName)){
                 if(client.getFullName().toLowerCase().contains(clientName.toLowerCase())) toReturn.add(client);
             }
         }
@@ -82,7 +90,7 @@ public class MemoryClientStorage implements ClientStorage {
     public Collection<Client> searchByPetName(String petName) {
 
         Collection<Client> toReturn = new HashSet<>();
-            if(petName != ""){
+            if(!"".equals(petName) ){
                 for (Pet pet: this.PET_CACHE.values()){
                     if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(this.clients.get(pet.getClientId()));
                 }
@@ -94,4 +102,5 @@ public class MemoryClientStorage implements ClientStorage {
     public void close() {
 
     }
+
 }

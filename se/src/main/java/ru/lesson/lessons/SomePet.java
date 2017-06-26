@@ -1,19 +1,20 @@
 package ru.lesson.lessons;
 
 /**
- * Класс для животного другого типа(не из доступного списка)
+ * Реализация неопределенного животного (неизвестного типа)
  */
 public class SomePet implements Pet {
-    /**
-     * Строка типа животного
-     */
-    private Pet pet;
+
+    /**  экземпляр животного инициируемого при создании объекта */
+    private final Pet pet;
 
     /**
      * Конструктор
-     * @param name Имя животного
+     * @param id id животного
+     * @param clientId id владельца
+     * @param name имя животного
      */
-    public SomePet(int id, int clientId, String name) {
+    public SomePet(final int id, final int clientId, final String name) {
         this.pet = new Animal(id, clientId, name, PetType.getIdByPetType(PetType.SOME_PET));
     }
 
@@ -34,7 +35,6 @@ public class SomePet implements Pet {
 
     @Override
     public PetType getType() {
-//        return this.getClass().getSimpleName();
         return this.pet.getType();
     }
 
@@ -43,10 +43,4 @@ public class SomePet implements Pet {
         return this.pet.getTypeId();
     }
 
-    @Override
-    public String toString() {
-        return "Some Pet{" +
-                "name='" + this.pet.getName() + '\'' +
-                '}';
-    }
 }

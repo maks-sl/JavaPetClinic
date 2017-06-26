@@ -1,6 +1,5 @@
 package ru.lesson.servlets;
 
-import ru.lesson.models.Client;
 import ru.lesson.store.ClientCache;
 
 import javax.servlet.RequestDispatcher;
@@ -9,10 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
 
 /**
- * Created by User on 17.06.2017.
+ * Сервлет поиска клиентов
  */
 public class ClientSearchServlet extends HttpServlet{
 
@@ -39,6 +37,12 @@ public class ClientSearchServlet extends HttpServlet{
             dispatcher.forward(req, resp);
         }
 
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        CLIENT_CACHE.close();
     }
 
 
