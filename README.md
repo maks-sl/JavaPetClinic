@@ -2,7 +2,7 @@
 
 Является одним из заданий [Обучающего курса Java](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
 <br>
-Другие выполненные мной задания этого курса [здесь](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
+Другие выполненные мной задания этого курса [здесь](https://github.com/maks-sl/JavaLessons)
 
 
 <p>Предназначена для хранения клиентов клиники и их питомцев.
