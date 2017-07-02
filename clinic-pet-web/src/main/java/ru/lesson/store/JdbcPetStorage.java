@@ -22,7 +22,7 @@ public class JdbcPetStorage implements PetStorage {
     /**
      * Конструктор соединения
      */
-    public JdbcPetStorage() {
+    JdbcPetStorage() {
         final Settings settings = Settings.getInstance();
         try {
             Class.forName(settings.value("jdbc.driver_class"));  // Не удалось настроить без этого
@@ -53,8 +53,6 @@ public class JdbcPetStorage implements PetStorage {
             toAdd.add(
                     PetGenerator.createPet(id, clientId, name, PetType.getTypeById(typeId))
             );
-
-
         }
         return toAdd;
     }

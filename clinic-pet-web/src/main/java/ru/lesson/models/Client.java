@@ -1,29 +1,28 @@
 package ru.lesson.models;
 
-import ru.lesson.lessons.Pet;
-import ru.lesson.store.PetCache;
-
-import java.util.Collection;
-
 /**
  * Класс клиента
  */
 public class Client {
 
     /** id клиента */
-    private final int id;
+    private int id;
     /** имя клиента */
-    private final String name;
+    private String name;
     /** фамилия клиента */
-    private final String surname;
+    private String surname;
     /** email клиента */
-    private final String email;
+    private String email;
     /** пол клиента */
-    private final int gender;
+    private int gender;
+    /** роль клиента */
+    private Role role;
 
-    /** питомцы клиента */
-    private final PetCache PET_CACHE = PetCache.getInstance();
-
+    /**
+     * Пустой конструктор
+     */
+    public Client() {
+    }
 
     /**
      * Конструктор
@@ -46,20 +45,48 @@ public class Client {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSurname() {
         return surname;
     }
 
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public int getGender() {
         return gender;
+    }
+
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     /**
@@ -70,13 +97,6 @@ public class Client {
         return this.name + " " + this.surname;
     }
 
-    /**
-     * Вернуть набор животных для данного владельца
-     * @return коллекция животных клиента
-     */
-    public Collection<Pet> getPets() {
-        return this.PET_CACHE.getByClientId(this.id);
-    }
 
     @Override
     public String toString() {

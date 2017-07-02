@@ -1,12 +1,12 @@
 package ru.lesson.store;
 
-import ru.lesson.lessons.Pet;
 import ru.lesson.models.Client;
 import ru.lesson.service.Settings;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -21,7 +21,7 @@ public class JdbcClientStorage implements ClientStorage {
     /**
      * Конструктор соединения
      */
-    public JdbcClientStorage() {
+    JdbcClientStorage() {
         final Settings settings = Settings.getInstance();
         try {
             Class.forName(settings.value("jdbc.driver_class"));  // Не удалось настроить без этого
@@ -137,9 +137,8 @@ public class JdbcClientStorage implements ClientStorage {
 
     @Override
     public Collection<Client> searchOr(String clientName, String petName) {
-        Collection<Client> toReturn = new ArrayList<>();
+        Collection<Client> toReturn = new HashSet<>();
         toReturn.addAll(searchByName(clientName));
-        toReturn.removeAll(searchByPetName(petName));
         toReturn.addAll(searchByPetName(petName));
         return toReturn;
     }
@@ -156,7 +155,7 @@ public class JdbcClientStorage implements ClientStorage {
 
     @Override
     public Collection<Client> searchByName(String clientName) {
-        final List<Client> toReturn = new ArrayList<>();
+        final Collection<Client> toReturn = new ArrayList<>();
         try (final PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM client WHERE lower(name) || ' ' || lower(surname) like (?)")){
             statement.setString(1, '%'+clientName.toLowerCase()+'%');
             try (final ResultSet rs = statement.executeQuery()) {
@@ -171,14 +170,28 @@ public class JdbcClientStorage implements ClientStorage {
     @Override
     public Collection<Client> searchByPetName(String petName) {
 
-        Collection<Client> toReturn = new ArrayList<>();
-        for (Client client: this.values()){
-            if(!"".equals(petName)){
-                for (Pet pet: client.getPets()){
-                    if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(client);
-                }
+
+        final Collection<Client> toReturn = new ArrayList<>();
+        try (final PreparedStatement statement = this.connection.prepareStatement("SELECT c.* FROM client c join pet p ON c.id = p.client_id WHERE lower(p.name) like (?)")){
+            statement.setString(1, '%'+petName.toLowerCase()+'%');
+            try (final ResultSet rs = statement.executeQuery()) {
+                this.clientsFromResult(rs, toReturn);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
+
+//        Collection<Client> toReturn = new ArrayList<>();
+//        for (Client client: this.values()){
+//            if(!"".equals(petName)){
+//                for (Pet pet: client.getPets()){
+//                    if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(client);
+//                }
+//            }
+//        }
+
         return toReturn;
     }
 
