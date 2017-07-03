@@ -11,7 +11,8 @@ import java.util.Collection;
 public class PetCache implements PetStorage {
 
     /** выбор реализации хранилища */
-    private final PetStorage petStorage = new JdbcPetStorage();
+    private final PetStorage petStorage = new HibernatePetStorage();
+//    private final PetStorage petStorage = new JdbcPetStorage();
 //    private final PetStorage petStorage = new MemoryPetStorage();
 
     /** инициализация единственного экземпляра */

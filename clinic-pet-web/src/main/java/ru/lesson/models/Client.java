@@ -1,5 +1,10 @@
 package ru.lesson.models;
 
+import ru.lesson.lessons.Pet;
+import ru.lesson.store.PetCache;
+
+import java.util.Collection;
+
 /**
  * Класс клиента
  */
@@ -97,6 +102,13 @@ public class Client {
         return this.name + " " + this.surname;
     }
 
+    /**
+     * Вернуть набор животных для данного владельца
+     * @return коллекция животных клиента
+     */
+    public Collection<Pet> getPets() {
+        return PetCache.getInstance().getByClientId(this.id);
+    }
 
     @Override
     public String toString() {

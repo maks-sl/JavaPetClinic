@@ -1,7 +1,7 @@
 package ru.lesson.models;
 
 /**
- * Created by User on 01.07.2017.
+ * Роль пользователя используемая в Hibernate
  */
 public class Role {
 

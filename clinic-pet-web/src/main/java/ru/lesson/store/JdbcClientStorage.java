@@ -1,5 +1,6 @@
 package ru.lesson.store;
 
+import ru.lesson.lessons.Pet;
 import ru.lesson.models.Client;
 import ru.lesson.service.Settings;
 
@@ -170,28 +171,22 @@ public class JdbcClientStorage implements ClientStorage {
     @Override
     public Collection<Client> searchByPetName(String petName) {
 
-
         final Collection<Client> toReturn = new ArrayList<>();
-        try (final PreparedStatement statement = this.connection.prepareStatement("SELECT c.* FROM client c join pet p ON c.id = p.client_id WHERE lower(p.name) like (?)")){
+        /*try (final PreparedStatement statement = this.connection.prepareStatement("SELECT c.* FROM client c join pet p ON c.id = p.client_id WHERE lower(p.name) like (?)")){
             statement.setString(1, '%'+petName.toLowerCase()+'%');
             try (final ResultSet rs = statement.executeQuery()) {
                 this.clientsFromResult(rs, toReturn);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }*/
+        for (Client client: this.values()){
+            if(!"".equals(petName)){
+                for (Pet pet: client.getPets()){
+                    if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(client);
+                }
+            }
         }
-
-
-
-//        Collection<Client> toReturn = new ArrayList<>();
-//        for (Client client: this.values()){
-//            if(!"".equals(petName)){
-//                for (Pet pet: client.getPets()){
-//                    if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(client);
-//                }
-//            }
-//        }
-
         return toReturn;
     }
 

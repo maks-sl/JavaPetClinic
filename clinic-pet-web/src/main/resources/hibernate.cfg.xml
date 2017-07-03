@@ -22,6 +22,7 @@
 
         <!-- List of XML mapping files -->
         <mapping resource="ru/lesson/models/Client.hbm.xml"/>
+        <mapping resource="ru/lesson/models/Pet.hbm.xml"/>
         <mapping resource="ru/lesson/models/Role.hbm.xml"/>
 
     </session-factory>

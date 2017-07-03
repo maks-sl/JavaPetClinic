@@ -6,16 +6,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import ru.lesson.models.Client;
+import ru.lesson.lessons.PetGenerator;
+import ru.lesson.lessons.PetType;
+import ru.lesson.models.Pet;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
 /**
  * Created by User on 29.06.2017.
  */
-public class HibernateClientStorage implements ClientStorage{
+public class HibernatePetStorage implements PetStorage{
 
     private SessionFactory sessionFactory;
     private org.hibernate.service.ServiceRegistry serviceRegistry;
@@ -29,16 +30,16 @@ public class HibernateClientStorage implements ClientStorage{
         return sessionFactory;
     }
 
-    HibernateClientStorage() {
+    HibernatePetStorage() {
         sessionFactory =  createSessionFactory();
     }
 
     @Override
-    public Collection<Client> values() {
+    public Collection<ru.lesson.lessons.Pet> values() {
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            return session.createQuery("from Client").list();
+            return session.createQuery("from Pet").list();
         } finally {
             tx.commit();
             session.close();
@@ -46,13 +47,23 @@ public class HibernateClientStorage implements ClientStorage{
     }
 
     @Override
-    public int add(String name, String surname, String email, int gender) {
-        Client client = new Client(0, name, surname, email, gender);
+    public Collection<ru.lesson.lessons.Pet> getByClientId(int clientId) {
+        Collection<ru.lesson.lessons.Pet> toReturn = new HashSet<>();
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            session.save(client);
-            return client.getId();
+            final Query query = session.createQuery("from Pet p where p.owner.id = :clientId");
+            query.setInteger("clientId", clientId);
+            Collection<Pet> toPets = query.list();
+            for(Pet toPet: toPets){
+                ru.lesson.lessons.Pet pet = PetGenerator.createPet(
+                        toPet.getId(),
+                        toPet.getOwner().getId(),
+                        toPet.getName(),
+                        PetType.getTypeById(toPet.getType_id()));
+                toReturn.add(pet);
+            }
+            return toReturn;
         } finally {
             tx.commit();
             session.close();
@@ -60,11 +71,34 @@ public class HibernateClientStorage implements ClientStorage{
     }
 
     @Override
-    public void edit(Client client) {
+    public int add(int clientId, String name, PetType type) {
+        Pet pet = new Pet(
+                0,
+                name,
+                PetType.getIdByPetType(type),
+                ClientCache.getInstance().get(clientId));
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            session.update(client);
+            session.save(pet);
+            return pet.getId();
+        } finally {
+            tx.commit();
+            session.close();
+        }
+    }
+
+    @Override
+    public void edit(ru.lesson.lessons.Pet toPet) {
+        Pet pet = new Pet(
+                toPet.getId(),
+                toPet.getName(),
+                toPet.getTypeId(),
+                ClientCache.getInstance().get(toPet.getClientId()));
+        final Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            session.update(pet);
         } finally {
             tx.commit();
             session.close();
@@ -84,62 +118,23 @@ public class HibernateClientStorage implements ClientStorage{
     }
 
     @Override
-    public Client get(int id) {
+    public ru.lesson.lessons.Pet get(int id) {
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            return (Client) session.get(Client.class, id);
+
+            Pet toPet = (Pet) session.get(Pet.class, id);
+            ru.lesson.lessons.Pet pet = PetGenerator.createPet(
+                    toPet.getId(),
+                    toPet.getOwner().getId(),
+                    toPet.getName(),
+                    PetType.getTypeById(toPet.getType_id()));
+            return pet;
         } finally {
             tx.commit();
             session.close();
         }
-    }
 
-    @Override
-    public Collection<Client> searchOr(String clientName, String petName) {
-        Collection<Client> toReturn = new HashSet<>();
-        toReturn.addAll(searchByName(clientName));
-        toReturn.addAll(searchByPetName(petName));
-        return toReturn;
-    }
-
-    @Override
-    public Collection<Client> searchAnd(String clientName, String petName) {
-        Collection<Client> toReturn = new ArrayList<>();
-        Collection<Client> cPetName = searchByPetName(petName);
-        for (Client c :searchByName(clientName)){
-            if(cPetName.contains(c)) toReturn.add(c);
-        }
-        return toReturn;
-    }
-
-    @Override
-    public Collection<Client> searchByName(String clientName) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            //TODO: поиск по имени и фамилии
-            final Query query = session.createQuery("from Client as client where lower(client.name) like :clientName");
-            query.setString("clientName", "%"+clientName.toLowerCase()+"%");
-            return (Collection<Client>) query.list();
-        } finally {
-            tx.commit();
-            session.close();
-        }
-    }
-
-    @Override
-    public Collection<Client> searchByPetName(String petName) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            final Query query = session.createQuery("from Client as c inner join Pet as p on p.owner = c where lower(p.name) like :petName");
-            query.setString("petName", "%"+petName.toLowerCase()+"%");
-            return (Collection<Client>) query.list();
-        } finally {
-            tx.commit();
-            session.close();
-        }
     }
 
     @Override

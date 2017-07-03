@@ -11,7 +11,8 @@ import java.util.Collection;
 public class ClientCache implements ClientStorage {
 
     /** выбор реализации хранилища */
-    private final ClientStorage clientStorage = new JdbcClientStorage();
+    private final ClientStorage clientStorage = new HibernateClientStorage();
+//    private final ClientStorage clientStorage = new JdbcClientStorage();
 //    private final ClientStorage clientStorage = new MemoryClientStorage();
 
     /** инициализация единственного экземпляра */
