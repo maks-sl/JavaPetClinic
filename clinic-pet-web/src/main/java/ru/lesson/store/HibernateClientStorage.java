@@ -33,66 +33,48 @@ public class HibernateClientStorage implements ClientStorage{
         sessionFactory =  createSessionFactory();
     }
 
-    @Override
-    public Collection<Client> values() {
+    public interface Command<T> {
+        T process(Session session);
+    }
+
+    private <T> T transaction(final Command<T> command){
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            return session.createQuery("from Client").list();
+            return command.process(session);
         } finally {
             tx.commit();
             session.close();
         }
+    }
+
+    @Override
+    public Collection<Client> values() {
+        return transaction((Session session) -> session.createQuery("from Client").list() );
     }
 
     @Override
     public int add(String name, String surname, String email, int gender) {
         Client client = new Client(0, name, surname, email, gender);
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
+        return transaction((Session session) -> {
             session.save(client);
             return client.getId();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        } );
     }
 
     @Override
     public void edit(Client client) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.update(client);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        transaction((Session session) -> {session.update(client); return null;});
     }
 
     @Override
     public void delete(int id) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.delete(this.get(id));
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        transaction((Session session) -> {session.delete(this.get(id)); return null;});
     }
 
     @Override
     public Client get(int id) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            return (Client) session.get(Client.class, id);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        return transaction((Session session) -> (Client) session.get(Client.class, id));
     }
 
     @Override
@@ -115,31 +97,18 @@ public class HibernateClientStorage implements ClientStorage{
 
     @Override
     public Collection<Client> searchByName(String clientName) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            //TODO: поиск по имени и фамилии
+        return transaction((Session session) -> {
             final Query query = session.createQuery("from Client as client where lower(client.name) like :clientName");
             query.setString("clientName", "%"+clientName.toLowerCase()+"%");
-            return (Collection<Client>) query.list();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+            return (Collection<Client>) query.list();} );
     }
 
     @Override
     public Collection<Client> searchByPetName(String petName) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
+        return transaction((Session session) -> {
             final Query query = session.createQuery("from Client as c inner join Pet as p on p.owner = c where lower(p.name) like :petName");
             query.setString("petName", "%"+petName.toLowerCase()+"%");
-            return (Collection<Client>) query.list();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+            return (Collection<Client>) query.list();} );
     }
 
     @Override

@@ -34,12 +34,15 @@ public class HibernatePetStorage implements PetStorage{
         sessionFactory =  createSessionFactory();
     }
 
-    @Override
-    public Collection<ru.lesson.lessons.Pet> values() {
+    public interface Command<T> {
+        T process(Session session);
+    }
+
+    private <T> T transaction(final HibernateClientStorage.Command<T> command){
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         try {
-            return session.createQuery("from Pet").list();
+            return command.process(session);
         } finally {
             tx.commit();
             session.close();
@@ -47,11 +50,14 @@ public class HibernatePetStorage implements PetStorage{
     }
 
     @Override
+    public Collection<ru.lesson.lessons.Pet> values() {
+        return transaction((Session session) -> session.createQuery("from Pet").list() );
+    }
+
+    @Override
     public Collection<ru.lesson.lessons.Pet> getByClientId(int clientId) {
-        Collection<ru.lesson.lessons.Pet> toReturn = new HashSet<>();
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
+        return transaction((Session session) -> {
+            Collection<ru.lesson.lessons.Pet> toReturn = new HashSet<>();
             final Query query = session.createQuery("from Pet p where p.owner.id = :clientId");
             query.setInteger("clientId", clientId);
             Collection<Pet> toPets = query.list();
@@ -64,10 +70,7 @@ public class HibernatePetStorage implements PetStorage{
                 toReturn.add(pet);
             }
             return toReturn;
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        } );
     }
 
     @Override
@@ -77,15 +80,10 @@ public class HibernatePetStorage implements PetStorage{
                 name,
                 PetType.getIdByPetType(type),
                 ClientCache.getInstance().get(clientId));
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
+        return transaction((Session session) -> {
             session.save(pet);
             return pet.getId();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        } );
     }
 
     @Override
@@ -95,34 +93,17 @@ public class HibernatePetStorage implements PetStorage{
                 toPet.getName(),
                 toPet.getTypeId(),
                 ClientCache.getInstance().get(toPet.getClientId()));
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.update(pet);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        transaction((Session session) -> {session.update(pet); return null;});
     }
 
     @Override
     public void delete(int id) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.delete(this.get(id));
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        transaction((Session session) -> {session.delete(session.get(Pet.class, id)); return null;});
     }
 
     @Override
     public ru.lesson.lessons.Pet get(int id) {
-        final Session session = sessionFactory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-
+        return transaction((Session session) -> {
             Pet toPet = (Pet) session.get(Pet.class, id);
             ru.lesson.lessons.Pet pet = PetGenerator.createPet(
                     toPet.getId(),
@@ -130,11 +111,7 @@ public class HibernatePetStorage implements PetStorage{
                     toPet.getName(),
                     PetType.getTypeById(toPet.getType_id()));
             return pet;
-        } finally {
-            tx.commit();
-            session.close();
-        }
-
+        });
     }
 
     @Override
