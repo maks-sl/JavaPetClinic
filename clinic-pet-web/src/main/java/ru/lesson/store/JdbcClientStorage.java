@@ -187,6 +187,14 @@ public class JdbcClientStorage implements ClientStorage {
                 }
             }
         }
+//        try (final PreparedStatement statement = this.connection.prepareStatement("SELECT c.* FROM client c join pet p ON c.id = p.client_id WHERE lower(p.name) like (?)")){
+//            statement.setString(1, '%'+petName.toLowerCase()+'%');
+//            try (final ResultSet rs = statement.executeQuery()) {
+//                this.clientsFromResult(rs, toReturn);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return toReturn;
     }
 
