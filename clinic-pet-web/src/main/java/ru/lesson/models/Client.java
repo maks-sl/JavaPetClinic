@@ -23,22 +23,8 @@ public class Client {
     private int gender;
     /** роль клиента */
     private Role role;
-
     /** животные клиента */
     private Set<ru.lesson.models.Pet> pets;
-
-    public Set<ru.lesson.models.Pet> getPets() {
-        return pets;
-    }
-
-    public void setPets(Set<ru.lesson.models.Pet> pets) {
-        this.pets = pets;
-    }
-//
-//    public void addPets(ru.lesson.models.Pet pet) {
-//        pet.setOwner(this);
-//        this.pets.add(pet);
-//    }
 
     /**
      * Пустой конструктор
@@ -109,6 +95,14 @@ public class Client {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Set<ru.lesson.models.Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(Set<ru.lesson.models.Pet> pets) {
+        this.pets = pets;
     }
 
     /**

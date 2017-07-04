@@ -10,8 +10,6 @@ public class Pet {
     private String name;
     /** id типа животного */
     private int type_id;
-//    /** id владельца животного */
-//    private int client_id;
     /** владелец животного */
     private Client owner;
 

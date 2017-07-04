@@ -133,7 +133,7 @@ public class JdbcClientStorage implements ClientStorage {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        throw new IllegalStateException("User not exist");
+        throw new IllegalStateException("Client not exist");
     }
 
     @Override

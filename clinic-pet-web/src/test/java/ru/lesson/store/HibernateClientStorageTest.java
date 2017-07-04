@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 /**
- * Created by User on 29.06.2017.
+ * Тест для Hibernate
  */
 public class HibernateClientStorageTest {
     @Test

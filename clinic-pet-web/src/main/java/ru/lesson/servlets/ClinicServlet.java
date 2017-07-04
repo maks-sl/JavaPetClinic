@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by User on 17.06.2017.
+ * Сервлет главной страницы клиники
  */
 public class ClinicServlet extends HttpServlet{
 

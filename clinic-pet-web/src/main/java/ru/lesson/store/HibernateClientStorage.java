@@ -13,7 +13,8 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Created by User on 29.06.2017.
+ * Класс хранения клиентов в БД использующий Hibernate
+ * Назначение @Override методов описано в интерфейсе PetStorage
  */
 public class HibernateClientStorage implements ClientStorage{
 
@@ -29,14 +30,35 @@ public class HibernateClientStorage implements ClientStorage{
         return sessionFactory;
     }
 
+    /**
+     * В конструкторе инициализируем sessionFactory
+     */
     HibernateClientStorage() {
         sessionFactory =  createSessionFactory();
     }
 
+    /**
+     * Шаблон проектирования Commander
+     * Интерфейс Command, представляющий нашу команду для выполнения
+     * содержит только один метод process, который запускается для исполнения
+     * Метод process мы будем реализовывать в анонимном классе передвавемом в функцию transaction
+     * @param <T> тип-параметр, указывает на возвращаемый
+     */
     public interface Command<T> {
         T process(Session session);
     }
 
+    /**
+     * Шаблон проектирования Commander
+     * Функция-коммандер для обращения к БД
+     * открывает сессию и транзакцию
+     * выполняет в блоке try переданную команду и возвращает результат
+     * после чего finally закрывает сессию и транзакцию
+     *
+     * @param command Команда
+     * @param <T> Тип-параметр
+     * @return результат работа команды
+     */
     private <T> T transaction(final Command<T> command){
         final Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
