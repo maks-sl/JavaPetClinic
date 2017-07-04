@@ -16,5 +16,9 @@
         <property name="email" column="email" type="string"/>
         <property name="gender" column="gender" type="int"/>
         <many-to-one name="role" column="role_id" class="ru.lesson.models.Role" cascade="save-update" />
+       <set name="pets" cascade="none" >
+            <key column="client_id"/>
+            <one-to-many class="ru.lesson.models.Pet"/>
+        </set>
     </class>
 </hibernate-mapping>

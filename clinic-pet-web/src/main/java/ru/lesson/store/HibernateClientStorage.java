@@ -98,7 +98,7 @@ public class HibernateClientStorage implements ClientStorage{
     @Override
     public Collection<Client> searchByName(String clientName) {
         return transaction((Session session) -> {
-            final Query query = session.createQuery("from Client as client where lower(client.name) like :clientName");
+            final Query query = session.createQuery("from Client as client where lower(client.name || ' ' || client.surname) like :clientName");
             query.setString("clientName", "%"+clientName.toLowerCase()+"%");
             return (Collection<Client>) query.list();} );
     }
@@ -106,7 +106,7 @@ public class HibernateClientStorage implements ClientStorage{
     @Override
     public Collection<Client> searchByPetName(String petName) {
         return transaction((Session session) -> {
-            final Query query = session.createQuery("from Client as c inner join Pet as p on p.owner = c where lower(p.name) like :petName");
+            final Query query = session.createQuery("select c from Client as c inner join c.pets as p where lower(p.name) like :petName");
             query.setString("petName", "%"+petName.toLowerCase()+"%");
             return (Collection<Client>) query.list();} );
     }

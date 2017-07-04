@@ -10,6 +10,8 @@ public class Pet {
     private String name;
     /** id типа животного */
     private int type_id;
+//    /** id владельца животного */
+//    private int client_id;
     /** владелец животного */
     private Client owner;
 
@@ -27,7 +29,7 @@ public class Pet {
      * @param owner владелец
      */
     public Pet(int id, String name, int type_id, Client owner) {
-        if(name.isEmpty() || type_id == 0 || owner.equals(null)) throw new IllegalArgumentException("Some of the arguments wrong");
+        if(name.isEmpty() || owner.equals(null)) throw new IllegalArgumentException("Some of the arguments wrong");
         this.id = id;
         this.name = name;
         this.type_id = type_id;

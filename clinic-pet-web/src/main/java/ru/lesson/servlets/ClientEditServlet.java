@@ -33,7 +33,13 @@ public class ClientEditServlet extends HttpServlet {
         String email =  req.getParameter("email");
         int gender = Integer.valueOf(req.getParameter("gender"));
 
-       this.CLIENT_CACHE.edit(new Client(id, name, surname, email, gender));
+        Client newClient = this.CLIENT_CACHE.get(id);
+        newClient.setName(name);
+        newClient.setSurname(surname);
+        newClient.setEmail(email);
+        newClient.setGender(gender);
+
+       this.CLIENT_CACHE.edit(newClient);
         resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/ClinicView"));
     }
 

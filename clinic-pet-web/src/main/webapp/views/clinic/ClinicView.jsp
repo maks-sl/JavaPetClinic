@@ -92,7 +92,7 @@
                         </div>
                         <div class="petCol">
                             <ul>
-                                <c:forEach items="${client.getPets()}" var="pet" varStatus="status">
+                                <c:forEach items="${client.getPetsOfClient()}" var="pet" varStatus="status">
                                     <li>${pet.getType()}/${pet.getName()}</li>
                                 </c:forEach>
                             </ul>

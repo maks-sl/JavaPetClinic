@@ -4,6 +4,7 @@ import ru.lesson.lessons.Pet;
 import ru.lesson.store.PetCache;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Класс клиента
@@ -22,6 +23,22 @@ public class Client {
     private int gender;
     /** роль клиента */
     private Role role;
+
+    /** животные клиента */
+    private Set<ru.lesson.models.Pet> pets;
+
+    public Set<ru.lesson.models.Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(Set<ru.lesson.models.Pet> pets) {
+        this.pets = pets;
+    }
+//
+//    public void addPets(ru.lesson.models.Pet pet) {
+//        pet.setOwner(this);
+//        this.pets.add(pet);
+//    }
 
     /**
      * Пустой конструктор
@@ -106,7 +123,7 @@ public class Client {
      * Вернуть набор животных для данного владельца
      * @return коллекция животных клиента
      */
-    public Collection<Pet> getPets() {
+    public Collection<Pet> getPetsOfClient() {
         return PetCache.getInstance().getByClientId(this.id);
     }
 

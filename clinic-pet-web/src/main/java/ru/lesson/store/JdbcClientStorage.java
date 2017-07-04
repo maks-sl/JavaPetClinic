@@ -182,7 +182,7 @@ public class JdbcClientStorage implements ClientStorage {
         }*/
         for (Client client: this.values()){
             if(!"".equals(petName)){
-                for (Pet pet: client.getPets()){
+                for (Pet pet: client.getPetsOfClient()){
                     if(pet.getName().toLowerCase().contains(petName.toLowerCase())) toReturn.add(client);
                 }
             }
