@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 import ru.lesson.models.Client;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.HashSet;
  * Класс хранения клиентов в БД использующий Hibernate
  * Назначение @Override методов описано в интерфейсе PetStorage
  */
+@Repository
 public class HibernateClientStorage implements ClientStorage{
 
     private SessionFactory sessionFactory;

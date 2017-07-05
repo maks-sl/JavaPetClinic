@@ -52,7 +52,7 @@ public enum PetType {
     }
 
     public static PetType getTypeByName(String name){
-        switch (name) {
+        switch (name.toUpperCase()) {
             case "CAT":
                 return CAT;
             case "DOG":

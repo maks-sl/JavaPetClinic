@@ -125,6 +125,7 @@ public class Client {
     public String toString() {
         return "Client{"  + "\r\n" +
                 "     id='" + id + "'\r\n" +
+                "     name='" + getFullName() + "'\r\n" +
                 '}';
     }
 

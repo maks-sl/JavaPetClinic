@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 import ru.lesson.lessons.PetGenerator;
 import ru.lesson.lessons.PetType;
 import ru.lesson.models.Pet;
@@ -17,6 +18,7 @@ import java.util.HashSet;
  * Класс хранения животных в БД использующий Hibernate
  * Назначение @Override методов описано в интерфейсе PetStorage
  */
+@Repository
 public class HibernatePetStorage implements PetStorage{
 
     private SessionFactory sessionFactory;
@@ -42,7 +44,7 @@ public class HibernatePetStorage implements PetStorage{
      * Шаблон проектирования Commander
      * Интерфейс Command, представляющий нашу команду для выполнения
      * содержит только один метод process, который запускается для исполнения
-     * Метод process мы будем реализовывать в анонимном классе передвавемом в функцию transaction
+     * Метод process мы будем реализовывать в анонимном классе передававемом в функцию transaction
      * @param <T> тип-параметр, указывает на возвращаемый
      */
     public interface Command<T> {
