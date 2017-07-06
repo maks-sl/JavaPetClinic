@@ -1,6 +1,8 @@
 package ru.lesson.store;
 
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.lesson.models.Client;
 
 import java.util.Collection;
@@ -11,7 +13,10 @@ import java.util.Collection;
 public class ClientCache implements ClientStorage {
 
     /** выбор реализации хранилища */
-    private final ClientStorage clientStorage = new HibernateClientStorage();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
+    private final ClientStorage clientStorage = storages.clientStorage;
+//    private final ClientStorage clientStorage = new HibernateClientStorage();
 //    private final ClientStorage clientStorage = new JdbcClientStorage();
 //    private final ClientStorage clientStorage = new MemoryClientStorage();
 

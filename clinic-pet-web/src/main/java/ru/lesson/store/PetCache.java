@@ -1,5 +1,7 @@
 package ru.lesson.store;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.lesson.lessons.Pet;
 import ru.lesson.lessons.PetType;
 
@@ -11,7 +13,11 @@ import java.util.Collection;
 public class PetCache implements PetStorage {
 
     /** выбор реализации хранилища */
-    private final PetStorage petStorage = new HibernatePetStorage();
+
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
+    private final PetStorage petStorage = storages.petStorage;
+//    private final PetStorage petStorage = new HibernatePetStorage();
 //    private final PetStorage petStorage = new JdbcPetStorage();
 //    private final PetStorage petStorage = new MemoryPetStorage();
 
