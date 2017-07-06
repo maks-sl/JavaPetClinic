@@ -73,28 +73,44 @@ public class HibernatePetStorage implements PetStorage{
         }
     }
 
+    /**
+     * Преобразует колеекцию записей из таблицы Pet
+     * в коллекцию объектов-реализаций интерфейса Pet (Cat, Dog, etc..)
+     * @param toPets коллекция записей из таблицы Pet на основании которой создаются экземпляры животных конкретных классов
+     * @return коллекция животных представленных экземплярами конкретных классов (Cat, Dog, etc..)
+     */
+    private Collection<ru.lesson.lessons.Pet> makePetsImplementation(Collection<Pet> toPets){
+        Collection<ru.lesson.lessons.Pet> toReturn = new HashSet<>();
+        for(Pet toPet: toPets){
+            ru.lesson.lessons.Pet pet = PetGenerator.createPet(
+                    toPet.getId(),
+                    toPet.getOwner().getId(),
+                    toPet.getName(),
+                    PetType.getTypeById(toPet.getType_id()));
+            toReturn.add(pet);
+        }
+        return toReturn;
+    }
+
     @Override
     public Collection<ru.lesson.lessons.Pet> values() {
-        return transaction((Session session) -> session.createQuery("from Pet").list() );
+
+        return makePetsImplementation(
+                (Collection<Pet>) transaction((Session session) -> session.createQuery("from Pet").list())
+        );
     }
 
     @Override
     public Collection<ru.lesson.lessons.Pet> getByClientId(int clientId) {
-        return transaction((Session session) -> {
-            Collection<ru.lesson.lessons.Pet> toReturn = new HashSet<>();
-            final Query query = session.createQuery("from Pet p where p.owner.id = :clientId");
-            query.setInteger("clientId", clientId);
-            Collection<Pet> toPets = query.list();
-            for(Pet toPet: toPets){
-                ru.lesson.lessons.Pet pet = PetGenerator.createPet(
-                        toPet.getId(),
-                        toPet.getOwner().getId(),
-                        toPet.getName(),
-                        PetType.getTypeById(toPet.getType_id()));
-                toReturn.add(pet);
-            }
-            return toReturn;
-        } );
+        return makePetsImplementation(
+                (Collection<Pet>) transaction((Session session) -> {
+                    Collection<ru.lesson.lessons.Pet> toReturn = new HashSet<>();
+                    final Query query = session.createQuery("from Pet p where p.owner.id = :clientId");
+                    query.setInteger("clientId", clientId);
+                    return query.list();
+
+                } )
+        );
     }
 
     @Override

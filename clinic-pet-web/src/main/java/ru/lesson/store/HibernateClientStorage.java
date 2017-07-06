@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 /**
  * Класс хранения клиентов в БД использующий Hibernate
- * Назначение @Override методов описано в интерфейсе PetStorage
+ * Назначение @Override методов описано в интерфейсе ClientStorage
  */
 @Repository
 public class HibernateClientStorage implements ClientStorage{
