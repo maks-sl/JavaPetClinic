@@ -49,7 +49,7 @@
 
 
             <form class="filled_form" action="${pageContext.servletContext.contextPath}/client/edit" method="post" name="contact_form">
-                <input type="hidden" name="clientId" value="${client.id}">
+                <input type="hidden" name="id" value="${client.id}">
                 <ul>
                     <li>
                         <h2>Edit client</h2>

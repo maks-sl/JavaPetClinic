@@ -135,7 +135,13 @@ public class DBTool {
         System.out.println("Enter gender:");
         int gender = Integer.valueOf(this.reader.next());
 
-        int cid = this.storages.clientStorage.add(name,surname,email,gender);
+        Client client = new Client();
+        client.setName(name);
+        client.setSurname(surname);
+        client.setEmail(email);
+        client.setGender(gender);
+
+        int cid = this.storages.clientStorage.add(client);
 
         System.out.println("Client with id:" +  cid + " has been added");
         System.out.println("If you want add a pet to client? (y/n)");

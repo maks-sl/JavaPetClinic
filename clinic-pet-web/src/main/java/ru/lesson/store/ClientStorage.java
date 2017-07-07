@@ -15,15 +15,22 @@ public interface ClientStorage {
      */
     Collection<Client> values();
 
+//    /**
+//     * Добавляет клиента в хранилище
+//     * @param name имя клиента
+//     * @param surname фамилия клиента
+//     * @param email электронная почта клиента
+//     * @param gender пол клиента
+//     * @return id добавленного в хранилище нового клиента
+//     */
+//    int add(final String name, final String surname, final String email, final int gender);
+
     /**
      * Добавляет клиента в хранилище
-     * @param name имя клиента
-     * @param surname фамилия клиента
-     * @param email электронная почта клиента
-     * @param gender пол клиента
+     * @param client
      * @return id добавленного в хранилище нового клиента
      */
-    int add(final String name, final String surname, final String email, final int gender);
+    int add(final Client client);
 
     /**
      * Изменение клиента.

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import ru.lesson.store.IHTClientStorage;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 public class DBToolTest {
 
     @Autowired
-    private HibernateClientStorage s;
+    private IHTClientStorage s;
 
     @Test
     public void doTest(){

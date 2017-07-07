@@ -76,7 +76,7 @@
                     </div>
 
                     <div class="buttonCol">
-                        <a href="${pageContext.servletContext.contextPath}/views/client/ClientCreate.jsp">+ Add Client</a>
+                        <a href="${pageContext.servletContext.contextPath}/views/client/create.jsp">+ Add Client</a>
                     </div>
                 </div>
 

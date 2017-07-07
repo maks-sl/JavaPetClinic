@@ -7,110 +7,110 @@
 
 	<display-name>ClinicPet</display-name>
 	
-	<servlet>
-		<servlet-name>ClinicServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.ClinicServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ClinicServlet</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
-	<!--<context-param>-->
-		<!--<param-name>contextConfigLocation</param-name>-->
-		<!--<param-value>-->
-			<!--classpath:spring-context.xml-->
-			<!--&lt;!&ndash;classpath:spring-security.xml&ndash;&gt;-->
-		<!--</param-value>-->
-	<!--</context-param>-->
-
-	<!--&lt;!&ndash; Creates the Spring Container shared by all Servlets and Filters &ndash;&gt;-->
-	<!--<listener>-->
-		<!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
-	<!--</listener>-->
-
-	<!--&lt;!&ndash; Processes application requests &ndash;&gt;-->
 	<!--<servlet>-->
-		<!--<servlet-name>appServlet</servlet-name>-->
-		<!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
-		<!--<init-param>-->
-			<!--<param-name>contextConfigLocation</param-name>-->
-			<!--<param-value>-->
-				<!--classpath:spring-context.xml-->
-				<!--&lt;!&ndash;classpath:spring-security.xml&ndash;&gt;-->
-			<!--</param-value>-->
-		<!--</init-param>-->
-		<!--<load-on-startup>1</load-on-startup>-->
+		<!--<servlet-name>ClinicServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.ClinicServlet</servlet-class>-->
 	<!--</servlet>-->
-
 	<!--<servlet-mapping>-->
-		<!--<servlet-name>appServlet</servlet-name>-->
+		<!--<servlet-name>ClinicServlet</servlet-name>-->
 		<!--<url-pattern>/</url-pattern>-->
 	<!--</servlet-mapping>-->
 
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:spring-context.xml
+			<!--classpath:spring-security.xml-->
+		</param-value>
+	</context-param>
 
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- Processes application requests -->
 	<servlet>
-		<servlet-name>ClientCreateServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.ClientCreateServlet</servlet-class>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>
+				classpath:spring-context.xml
+				<!--classpath:spring-security.xml-->
+			</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
+
 	<servlet-mapping>
-		<servlet-name>ClientCreateServlet</servlet-name>
-		<url-pattern>/client/create</url-pattern>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>ClientEditServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.ClientEditServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ClientEditServlet</servlet-name>
-		<url-pattern>/client/edit</url-pattern>
-	</servlet-mapping>
 
-	<servlet>
-		<servlet-name>ClientDeleteServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.ClientDeleteServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ClientDeleteServlet</servlet-name>
-		<url-pattern>/client/delete</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>ClientCreateServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.ClientCreateServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>ClientCreateServlet</servlet-name>-->
+		<!--<url-pattern>/client/create</url-pattern>-->
+	<!--</servlet-mapping>-->
 
-	<servlet>
-		<servlet-name>ClientSearchServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.ClientSearchServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>ClientSearchServlet</servlet-name>
-		<url-pattern>/client/search</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>ClientEditServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.ClientEditServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>ClientEditServlet</servlet-name>-->
+		<!--<url-pattern>/client/edit</url-pattern>-->
+	<!--</servlet-mapping>-->
 
-	<servlet>
-		<servlet-name>PetCreateServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.PetCreateServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PetCreateServlet</servlet-name>
-		<url-pattern>/pet/create</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>ClientDeleteServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.ClientDeleteServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>ClientDeleteServlet</servlet-name>-->
+		<!--<url-pattern>/client/delete</url-pattern>-->
+	<!--</servlet-mapping>-->
 
-	<servlet>
-		<servlet-name>PetEditServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.PetEditServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PetEditServlet</servlet-name>
-		<url-pattern>/pet/edit</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>ClientSearchServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.ClientSearchServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>ClientSearchServlet</servlet-name>-->
+		<!--<url-pattern>/client/search</url-pattern>-->
+	<!--</servlet-mapping>-->
 
-	<servlet>
-		<servlet-name>PetDeleteServlet</servlet-name>
-		<servlet-class>ru.lesson.servlets.PetDeleteServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>PetDeleteServlet</servlet-name>
-		<url-pattern>/pet/delete</url-pattern>
-	</servlet-mapping>
+	<!--<servlet>-->
+		<!--<servlet-name>PetCreateServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.PetCreateServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>PetCreateServlet</servlet-name>-->
+		<!--<url-pattern>/pet/create</url-pattern>-->
+	<!--</servlet-mapping>-->
+
+	<!--<servlet>-->
+		<!--<servlet-name>PetEditServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.PetEditServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>PetEditServlet</servlet-name>-->
+		<!--<url-pattern>/pet/edit</url-pattern>-->
+	<!--</servlet-mapping>-->
+
+	<!--<servlet>-->
+		<!--<servlet-name>PetDeleteServlet</servlet-name>-->
+		<!--<servlet-class>ru.lesson.servlets.PetDeleteServlet</servlet-class>-->
+	<!--</servlet>-->
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>PetDeleteServlet</servlet-name>-->
+		<!--<url-pattern>/pet/delete</url-pattern>-->
+	<!--</servlet-mapping>-->
 
 	<servlet-mapping>
 		<servlet-name>default</servlet-name>

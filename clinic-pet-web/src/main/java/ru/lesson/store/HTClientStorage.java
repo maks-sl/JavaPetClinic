@@ -30,16 +30,22 @@ public class HTClientStorage implements IHTClientStorage{
 
     @Override
     public Collection<Client> values() {
-        return (Collection<Client>) this.ht.find("select distinct c from Client as c INNER JOIN FETCH c.pets as p INNER JOIN FETCH p.petType as pt");
+        return (Collection<Client>) this.ht.find("select distinct c from Client as c LEFT JOIN FETCH c.pets as p left JOIN FETCH p.petType as pt");
     }
 
+//    @Override
+//    public int add(String name, String surname, String email, int gender) {
+//        Client client = new Client();
+//        client.setName(name);
+//        client.setSurname(surname);
+//        client.setEmail(email);
+//        client.setGender(gender);
+//        return (int) this.ht.save(client);
+//    }
+
+
     @Override
-    public int add(String name, String surname, String email, int gender) {
-        Client client = new Client();
-        client.setName(name);
-        client.setSurname(surname);
-        client.setEmail(email);
-        client.setGender(gender);
+    public int add(Client client) {
         return (int) this.ht.save(client);
     }
 
@@ -79,7 +85,7 @@ public class HTClientStorage implements IHTClientStorage{
     @Override
     public Collection<Client> searchByName(String clientName) {
         Collection<Client> qwe = (Collection<Client>) this.ht.findByNamedParam(
-                    "select distinct c from Client as c inner join fetch c.pets as p inner join fetch p.petType as pt where lower(c.name || ' ' || c.surname) like :clientName",
+                    "select distinct c from Client as c left join fetch c.pets as p left join fetch p.petType as pt where lower(c.name || ' ' || c.surname) like :clientName",
                     "clientName",
                     "%"+clientName+"%");
 
@@ -89,7 +95,7 @@ public class HTClientStorage implements IHTClientStorage{
     @Override
     public Collection<Client> searchByPetName(String petName) {
         return (Collection<Client>) this.ht.findByNamedParam(
-                "select distinct c from Client as c inner join fetch c.pets as p inner join fetch p.petType as pt where lower(p.name) like :petName",
+                "select distinct c from Client as c left join fetch c.pets as p left join fetch p.petType as pt where lower(p.name) like :petName",
                 "petName",
                 "%"+petName+"%");
     }
