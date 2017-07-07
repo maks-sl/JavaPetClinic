@@ -2,8 +2,8 @@ package ru.lesson.tools;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.lesson.lessons.PetType;
 import ru.lesson.models.Client;
+import ru.lesson.models.Pet;
 import ru.lesson.store.Storages;
 
 import java.util.*;
@@ -186,12 +186,16 @@ public class DBTool {
      */
     private void addPet(int cid) throws Exception {
         System.out.println("ADD PET TO CLIENT:...");
-        System.out.println("Enter pet type (cat/dog):");
+        System.out.println("Enter pet type (1-cat/2-dog/3-some pet):");
         String petType = this.reader.next();
         System.out.println("Enter pet name:");
         String petName = this.reader.next();
 
-        int pid = this.storages.petStorage.add(cid, petName, PetType.getTypeByName(petType));
+        Pet pet = new Pet();
+        pet.setName(petName);
+        pet.setOwner(this.storages.clientStorage.get(cid));
+        pet.setPetType(storages.petTypeStorage.get(Integer.valueOf(petType)));
+        int pid = this.storages.petStorage.add(pet);
         if(pid != 0)System.out.println("Pet has been added");
             else {System.out.println("Pet not added");}
     }

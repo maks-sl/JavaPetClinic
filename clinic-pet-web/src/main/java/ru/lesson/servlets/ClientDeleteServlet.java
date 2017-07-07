@@ -1,7 +1,9 @@
 package ru.lesson.servlets;
 
 
-import ru.lesson.store.ClientCache;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.lesson.store.Storages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,18 +16,18 @@ import java.io.IOException;
  */
 public class ClientDeleteServlet extends HttpServlet {
 
-    private final ClientCache CLIENT_CACHE = ClientCache.getInstance();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.CLIENT_CACHE.delete(Integer.valueOf(req.getParameter("id")));
+        this.storages.clientStorage.delete(Integer.valueOf(req.getParameter("id")));
         resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/view"));
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        CLIENT_CACHE.close();
     }
 
 }

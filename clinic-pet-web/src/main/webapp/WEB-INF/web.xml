@@ -7,8 +7,6 @@
 
 	<display-name>ClinicPet</display-name>
 	
-	<description>Simple</description>
-	
 	<servlet>
 		<servlet-name>ClinicServlet</servlet-name>
 		<servlet-class>ru.lesson.servlets.ClinicServlet</servlet-class>
@@ -17,6 +15,38 @@
 		<servlet-name>ClinicServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+
+	<!--<context-param>-->
+		<!--<param-name>contextConfigLocation</param-name>-->
+		<!--<param-value>-->
+			<!--classpath:spring-context.xml-->
+			<!--&lt;!&ndash;classpath:spring-security.xml&ndash;&gt;-->
+		<!--</param-value>-->
+	<!--</context-param>-->
+
+	<!--&lt;!&ndash; Creates the Spring Container shared by all Servlets and Filters &ndash;&gt;-->
+	<!--<listener>-->
+		<!--<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>-->
+	<!--</listener>-->
+
+	<!--&lt;!&ndash; Processes application requests &ndash;&gt;-->
+	<!--<servlet>-->
+		<!--<servlet-name>appServlet</servlet-name>-->
+		<!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+		<!--<init-param>-->
+			<!--<param-name>contextConfigLocation</param-name>-->
+			<!--<param-value>-->
+				<!--classpath:spring-context.xml-->
+				<!--&lt;!&ndash;classpath:spring-security.xml&ndash;&gt;-->
+			<!--</param-value>-->
+		<!--</init-param>-->
+		<!--<load-on-startup>1</load-on-startup>-->
+	<!--</servlet>-->
+
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>appServlet</servlet-name>-->
+		<!--<url-pattern>/</url-pattern>-->
+	<!--</servlet-mapping>-->
 
 
 	<servlet>

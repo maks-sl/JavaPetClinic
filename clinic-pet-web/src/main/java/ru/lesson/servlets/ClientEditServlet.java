@@ -1,7 +1,9 @@
 package ru.lesson.servlets;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.lesson.models.Client;
-import ru.lesson.store.ClientCache;
+import ru.lesson.store.Storages;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,11 +17,13 @@ import java.io.IOException;
  */
 public class ClientEditServlet extends HttpServlet {
 
-    private final ClientCache CLIENT_CACHE = ClientCache.getInstance();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("client", this.CLIENT_CACHE.get(Integer.valueOf(req.getParameter("id"))));
+        req.setAttribute("client", this.storages.clientStorage.get(Integer.valueOf(req.getParameter("id"))));
+        req.setAttribute("clientPets", this.storages.petStorage.getByClientId(Integer.valueOf(req.getParameter("id"))));
         RequestDispatcher disp = req.getRequestDispatcher("/views/client/ClientEdit.jsp");
         disp.forward(req, resp);
     }
@@ -33,19 +37,18 @@ public class ClientEditServlet extends HttpServlet {
         String email =  req.getParameter("email");
         int gender = Integer.valueOf(req.getParameter("gender"));
 
-        Client newClient = this.CLIENT_CACHE.get(id);
+        Client newClient = this.storages.clientStorage.get(id);
         newClient.setName(name);
         newClient.setSurname(surname);
         newClient.setEmail(email);
         newClient.setGender(gender);
 
-       this.CLIENT_CACHE.edit(newClient);
+       this.storages.clientStorage.edit(newClient);
         resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/ClinicView"));
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        CLIENT_CACHE.close();
     }
 }

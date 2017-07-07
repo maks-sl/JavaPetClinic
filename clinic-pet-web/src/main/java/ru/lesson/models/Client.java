@@ -1,9 +1,5 @@
 package ru.lesson.models;
 
-import ru.lesson.lessons.Pet;
-import ru.lesson.store.PetCache;
-
-import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -24,7 +20,7 @@ public class Client {
     /** роль клиента */
     private Role role;
     /** животные клиента */
-    private Set<ru.lesson.models.Pet> pets;
+    private Set<Pet> pets;
 
     /**
      * Пустой конструктор
@@ -32,22 +28,22 @@ public class Client {
     public Client() {
     }
 
-    /**
-     * Конструктор
-     * @param id id клиента
-     * @param name имя клиента
-     * @param surname фамилия клиента
-     * @param email электронная почта клиента
-     * @param gender пол клиента
-     */
-    public Client(int id, String name, String surname, String email, int gender) {
-        if(name.isEmpty() || surname.isEmpty() || email.isEmpty()) throw new IllegalArgumentException("Some of the arguments wrong");
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.gender = gender;
-    }
+//    /**
+//     * Конструктор
+//     * @param id id клиента
+//     * @param name имя клиента
+//     * @param surname фамилия клиента
+//     * @param email электронная почта клиента
+//     * @param gender пол клиента
+//     */
+//    public Client(int id, String name, String surname, String email, int gender) {
+//        if(name.isEmpty() || surname.isEmpty() || email.isEmpty()) throw new IllegalArgumentException("Some of the arguments wrong");
+//        this.id = id;
+//        this.name = name;
+//        this.surname = surname;
+//        this.email = email;
+//        this.gender = gender;
+//    }
 
     public int getId() {
         return id;
@@ -97,11 +93,11 @@ public class Client {
         this.role = role;
     }
 
-    public Set<ru.lesson.models.Pet> getPets() {
+    public Set<Pet> getPets() {
         return pets;
     }
 
-    public void setPets(Set<ru.lesson.models.Pet> pets) {
+    public void setPets(Set<Pet> pets) {
         this.pets = pets;
     }
 
@@ -113,19 +109,11 @@ public class Client {
         return this.name + " " + this.surname;
     }
 
-    /**
-     * Вернуть набор животных для данного владельца
-     * @return коллекция животных клиента
-     */
-    public Collection<Pet> getPetsOfClient() {
-        return PetCache.getInstance().getByClientId(this.id);
-    }
-
     @Override
     public String toString() {
         return "Client{"  + "\r\n" +
                 "     id='" + id + "'\r\n" +
-                "     name='" + getFullName() + "'\r\n" +
+                "     fullName='" + getFullName() + "'\r\n" +
                 '}';
     }
 

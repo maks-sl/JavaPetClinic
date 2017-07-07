@@ -1,6 +1,8 @@
 package ru.lesson.servlets;
 
-import ru.lesson.store.ClientCache;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.lesson.store.Storages;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,11 +16,12 @@ import java.io.IOException;
  */
 public class ClinicServlet extends HttpServlet{
 
-    private final ClientCache CLIENT_CACHE = ClientCache.getInstance();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("clients", this.CLIENT_CACHE.values());
+        req.setAttribute("clients", this.storages.clientStorage.values());
         RequestDispatcher dispatcher = req.getRequestDispatcher("/views/clinic/ClinicView.jsp");
         dispatcher.forward(req, resp);
     }
@@ -26,6 +29,5 @@ public class ClinicServlet extends HttpServlet{
     @Override
     public void destroy() {
         super.destroy();
-        CLIENT_CACHE.close();
     }
 }

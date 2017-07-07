@@ -3,13 +3,13 @@ package ru.lesson.models;
 /**
  * Животное используемое в Hibernate
  */
-public class Pet {
+public class Pet{
     /** id животного */
     private int id;
     /** имя животного */
     private String name;
-    /** id типа животного */
-    private int type_id;
+    /** тип животного */
+    private PetType petType;
     /** владелец животного */
     private Client owner;
 
@@ -23,14 +23,14 @@ public class Pet {
      * Конструктор
      * @param id id животного
      * @param name имя животного
-     * @param type_id тип животного
+     * @param petType тип животного
      * @param owner владелец
      */
-    public Pet(int id, String name, int type_id, Client owner) {
+    public Pet(int id, String name, PetType petType, Client owner) {
         if(name.isEmpty() || owner.equals(null)) throw new IllegalArgumentException("Some of the arguments wrong");
         this.id = id;
         this.name = name;
-        this.type_id = type_id;
+        this.petType = petType;
         this.owner = owner;
     }
 
@@ -50,12 +50,12 @@ public class Pet {
         this.name = name;
     }
 
-    public int getType_id() {
-        return type_id;
+    public PetType getPetType() {
+        return petType;
     }
 
-    public void setType_id(int type_id) {
-        this.type_id = type_id;
+    public void setPetType(PetType petType) {
+        this.petType = petType;
     }
 
     public Client getOwner() {
@@ -80,4 +80,8 @@ public class Pet {
     public int hashCode() {
         return id;
     }
+
 }
+
+
+

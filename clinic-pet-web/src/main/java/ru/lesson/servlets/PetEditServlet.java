@@ -1,9 +1,9 @@
 package ru.lesson.servlets;
 
-import ru.lesson.lessons.Pet;
-import ru.lesson.lessons.PetGenerator;
-import ru.lesson.lessons.PetType;
-import ru.lesson.store.PetCache;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.lesson.models.Pet;
+import ru.lesson.store.Storages;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,32 +17,32 @@ import java.io.IOException;
  */
 public class PetEditServlet extends HttpServlet {
 
-    private final PetCache PET_CACHE = PetCache.getInstance();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        Pet pet = this.PET_CACHE.get(Integer.valueOf(req.getParameter("petId")));
+        Pet pet = this.storages.petStorage.get(Integer.valueOf(req.getParameter("petId")));
         req.setAttribute("pet", pet);
-        req.setAttribute("petTypes", PetType.values());
+        req.setAttribute("petTypes", this.storages.petTypeStorage.values());
         RequestDispatcher disp = req.getRequestDispatcher("/views/pet/PetEdit.jsp");
         disp.forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        Pet currentPet = this.PET_CACHE.get(Integer.valueOf(req.getParameter("petId")));
-        String petTypeName = req.getParameter("petTypeName");
+        Pet currentPet = this.storages.petStorage.get(Integer.valueOf(req.getParameter("petId")));
         String petName = req.getParameter("petName");
-        Pet newPet = PetGenerator.createPet( currentPet.getId(), currentPet.getClientId(), petName, PetType.getTypeByName(petTypeName) );
-        this.PET_CACHE.edit(newPet);
-        resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/edit?id="+newPet.getClientId()));
+        int petTypeId = Integer.valueOf(req.getParameter("petTypeId"));
+        currentPet.setName(petName);
+        currentPet.setPetType(storages.petTypeStorage.get(petTypeId));
+        this.storages.petStorage.edit(currentPet);
+        resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/edit?id="+currentPet.getOwner().getId()));
     }
 
     @Override
     public void destroy() {
         super.destroy();
-        PET_CACHE.close();
     }
 }

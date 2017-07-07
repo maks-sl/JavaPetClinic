@@ -1,7 +1,6 @@
 package ru.lesson.store;
 
-import ru.lesson.lessons.Pet;
-import ru.lesson.lessons.PetType;
+import ru.lesson.models.Pet;
 
 import java.util.Collection;
 
@@ -25,12 +24,10 @@ public interface PetStorage {
 
     /**
      * Добавляет питомца в хранилище
-     * @param clientId id владельца животного
-     * @param name имя животного
-     * @param type параметр PetType определяющий тип животного
+     * @param pet животное
      * @return id добавленного в хранилище нового питомца
      */
-    int add(final int clientId, final  String name, final  PetType type);
+    int add(final Pet pet);
 
     /**
      * Изменение животного.

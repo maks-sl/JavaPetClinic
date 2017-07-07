@@ -1,6 +1,8 @@
 package ru.lesson.servlets;
 
-import ru.lesson.store.ClientCache;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.lesson.store.Storages;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +16,8 @@ import java.io.IOException;
  */
 public class ClientSearchServlet extends HttpServlet{
 
-    private final ClientCache CLIENT_CACHE = ClientCache.getInstance();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,10 +31,10 @@ public class ClientSearchServlet extends HttpServlet{
             resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/view"));
         }
         else {
-            if (petName.equals("")) req.setAttribute("clients", CLIENT_CACHE.searchByName(clientName));
-            else if (clientName.equals("")) req.setAttribute("clients", CLIENT_CACHE.searchByPetName(petName));
-            else if (isAnd == null) req.setAttribute("clients", CLIENT_CACHE.searchOr(clientName, petName));
-            else req.setAttribute("clients", CLIENT_CACHE.searchAnd(clientName, petName));
+            if (petName.equals("")) req.setAttribute("clients", storages.clientStorage.searchByName(clientName));
+            else if (clientName.equals("")) req.setAttribute("clients", storages.clientStorage.searchByPetName(petName));
+            else if (isAnd == null) req.setAttribute("clients", storages.clientStorage.searchOr(clientName, petName));
+            else req.setAttribute("clients", storages.clientStorage.searchAnd(clientName, petName));
 
             RequestDispatcher dispatcher = req.getRequestDispatcher("/views/clinic/ClinicView.jsp");
             dispatcher.forward(req, resp);
@@ -42,7 +45,6 @@ public class ClientSearchServlet extends HttpServlet{
     @Override
     public void destroy() {
         super.destroy();
-        CLIENT_CACHE.close();
     }
 
 

@@ -1,7 +1,9 @@
 package ru.lesson.servlets;
 
-import ru.lesson.lessons.Pet;
-import ru.lesson.store.PetCache;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.lesson.models.Pet;
+import ru.lesson.store.Storages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,13 +16,14 @@ import java.io.IOException;
  */
 public class PetDeleteServlet extends HttpServlet {
 
-    private final PetCache PET_CACHE = PetCache.getInstance();
+    ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+    Storages storages = context.getBean(Storages.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Pet pet = this.PET_CACHE.get(Integer.valueOf(req.getParameter("petId")));
-        int clientId = pet.getClientId();
-        this.PET_CACHE.delete(Integer.valueOf(req.getParameter("petId")));
+        Pet pet = this.storages.petStorage.get(Integer.valueOf(req.getParameter("petId")));
+        int clientId = pet.getOwner().getId();
+        this.storages.petStorage.delete(Integer.valueOf(req.getParameter("petId")));
 
         resp.sendRedirect(String.format("%s%s", req.getContextPath(), "/client/edit?id="+clientId));
     }
@@ -28,6 +31,5 @@ public class PetDeleteServlet extends HttpServlet {
     @Override
     public void destroy() {
         super.destroy();
-        PET_CACHE.close();
     }
 }

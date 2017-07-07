@@ -38,7 +38,7 @@
             <h2>Client editor</h2>
             <br>
             <form class="deleteBtn"
-            <c:if test = "${client.getPetsOfClient().size() > 0}">
+            <c:if test = "${clientPets.size() > 0}">
                 onsubmit="alert('Сначала удалите всех животных клиента');return false"
             </c:if>
                   action="${pageContext.servletContext.contextPath}/client/delete">
@@ -96,12 +96,11 @@
                         </div>
                     </div>
 
-                    <c:forEach items="${client.getPetsOfClient()}" var="pet" varStatus="status">
+                    <c:forEach items="${clientPets}" var="pet" varStatus="status">
                         <div class="clientRow">
                             <div class="clientCol">
-                                ${pet.name}
+                                    ${pet.petType.getName()} / ${pet.name}
                             </div>
-
                             <div style="margin-left: 0px;" class="buttonCol">
                                 <a href="${pageContext.servletContext.contextPath}/pet/edit?clientId=${client.id}&petId=${pet.getId()}">Изменить</a>
                             </div>

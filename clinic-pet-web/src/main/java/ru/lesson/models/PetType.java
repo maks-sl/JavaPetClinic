@@ -1,16 +1,15 @@
 package ru.lesson.models;
 
 /**
- * Роль пользователя используемая в Hibernate
+ * Тип животного используемго в Hibernate
  */
-public class Role {
-
+public class PetType {
     /** id */
     private int id;
-    /** имя */
+    /** имя типа животного */
     private String name;
 
-    public Role() {
+    public PetType() {
     }
 
     public int getId() {

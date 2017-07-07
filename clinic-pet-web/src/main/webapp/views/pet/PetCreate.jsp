@@ -46,10 +46,10 @@
                 <%--<input id="age" name="age" value="${pet.age}" required />--%>
                 <%--</li>--%>
                 <li>
-                    <label for="petTypeName">Type:</label>
-                    <select size = "1" size = "1" id="petTypeName" name="petTypeName" style="padding: 5px; width: 260px" required>
+                    <label for="petTypeId">Type:</label>
+                    <select size = "1" size = "1" id="petTypeId" name="petTypeId" style="padding: 5px; width: 260px" required>
                         <c:forEach items="${petTypes}" var="petType" varStatus="status">
-                            <option value = "${petType.toString()}">${petType.toString()}</option>
+                            <option value = "${petType.id}">${petType.name}</option>
                         </c:forEach>
                     </select>
                 </li>
