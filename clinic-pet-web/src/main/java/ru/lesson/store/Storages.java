@@ -13,11 +13,13 @@ public class Storages {
     public final IHTClientStorage clientStorage;
     public final IHTPetStorage petStorage;
     public final BaseStorage<PetType> petTypeStorage;
+    public final IHTUserStorage userStorage;
 
     @Autowired
-    public Storages(IHTClientStorage clientStorage, IHTPetStorage petStorage, BaseStorage<PetType> petTypeStorage) {
+    public Storages(IHTClientStorage clientStorage, IHTPetStorage petStorage, BaseStorage<PetType> petTypeStorage, IHTUserStorage userStorage) {
         this.clientStorage = clientStorage;
         this.petStorage = petStorage;
         this.petTypeStorage = petTypeStorage;
+        this.userStorage = userStorage;
     }
 }

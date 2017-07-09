@@ -25,6 +25,7 @@
         <mapping resource="ru/lesson/models/Client.hbm.xml"/>
         <mapping resource="ru/lesson/models/Pet.hbm.xml"/>
         <mapping resource="ru/lesson/models/PetType.hbm.xml"/>
+        <mapping resource="ru/lesson/models/Appuser.hbm.xml"/>
         <mapping resource="ru/lesson/models/Role.hbm.xml"/>
 
     </session-factory>

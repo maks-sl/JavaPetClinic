@@ -17,8 +17,6 @@ public class Client {
     private String email;
     /** пол клиента */
     private int gender;
-    /** роль клиента */
-    private Role role;
     /** животные клиента */
     private Set<Pet> pets;
 
@@ -83,14 +81,6 @@ public class Client {
 
     public void setGender(int gender) {
         this.gender = gender;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public Set<Pet> getPets() {

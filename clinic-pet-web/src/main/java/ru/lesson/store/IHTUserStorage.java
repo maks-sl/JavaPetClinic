@@ -1,31 +1,41 @@
 package ru.lesson.store;
 
+import ru.lesson.models.Appuser;
+
 import java.util.Collection;
 
 /**
- * Описание базовых методов хранилища характерных для любой сущности
+ * Описание доступных методов хранилища User
  */
-public interface BaseStorage<T> {
+public interface IHTUserStorage {
+
+    /**
+     * Возвращает найденного пользователя по логину и паролю
+     * @param login логин
+     * @param password пароль
+     * @return найденный пользователь
+     */
+    Appuser findOnAuth(final String login, final String password);
 
     /**
      * Возвращает всех объектов
      * @return Коллекция объектов
      */
-    Collection<T> values();
+    Collection<Appuser> values();
 
     /**
      * Добавляет объект в хранилище
      * @param object объект
      * @return id добавленного в хранилище нового объекта
      */
-    int add(final T object);
+    int add(final Appuser object);
 
     /**
      * Изменение объекта.
      * Заменяет существующий экземпляр объекта (с таким же id как у передаваемого)
      * @param object новый экземпляр объекта
      */
-    void edit(final T object);
+    void edit(final Appuser object);
 
     /**
      * Удаляет экземпляр объекта из хранилища по id
@@ -38,7 +48,7 @@ public interface BaseStorage<T> {
      * @param id id объекта
      * @return экземпляр объекта
      */
-    T get(final int id);
+    Appuser get(final int id);
 
     /**
      * Функция закрытия ресурсов

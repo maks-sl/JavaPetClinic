@@ -33,7 +33,7 @@ public class HTPetStorage implements IHTPetStorage{
 
     @Override
     public Collection<Pet> getByClientId(int clientId) {
-        return (Collection<Pet>) this.ht.findByNamedParam("from Pet p INNER JOIN fetch p.petType as pt where p.owner.id = :clientId", "clientId", clientId);
+        return (Collection<Pet>) this.ht.findByNamedParam("from Pet p join fetch p.petType as pt where p.owner.id = :clientId", "clientId", clientId);
     }
 
     @Override

@@ -12,7 +12,7 @@ import ru.lesson.models.PetForm;
 import ru.lesson.store.Storages;
 
 /**
- * Created by User on 07.07.2017.
+ * Контроллер животного
  */
 @Controller
 @RequestMapping("/pet")

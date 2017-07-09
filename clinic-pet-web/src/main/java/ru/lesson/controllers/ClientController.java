@@ -39,7 +39,10 @@ public class ClientController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editPost(@ModelAttribute Client client) {
+        Client oldClient = this.storages.clientStorage.get(client.getId());
+        client.setPets(oldClient.getPets());
         this.storages.clientStorage.edit(client);
+
         return "redirect:/";
     }
 

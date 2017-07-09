@@ -4,13 +4,15 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="ru.lesson.models.Role" table="role">
+    <class name="ru.lesson.models.Appuser" table="appuser">
         <meta attribute="class-description">
-            This class contains the role detail.
+            This class contains the user detail.
         </meta>
         <id name="id" type="int" column="id">
             <generator class="identity"/>
         </id>
-        <property name="name" column="name" type="string"/>
+        <property name="login" column="login" type="string"/>
+        <property name="password" column="password" type="string"/>
+        <many-to-one name="role" column="role_id" class="ru.lesson.models.Role" cascade="none" />
     </class>
 </hibernate-mapping>

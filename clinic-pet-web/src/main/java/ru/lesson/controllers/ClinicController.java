@@ -18,7 +18,7 @@ public class ClinicController {
     private Storages storages;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String showRoles(ModelMap model) {
+    public String showClients(ModelMap model) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        //current user
 //        String login = auth.getName();

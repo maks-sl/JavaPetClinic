@@ -1,7 +1,7 @@
 package ru.lesson.models;
 
 /**
- * Роль пользователя используемая в Hibernate
+ * Роль пользователя импользуемая при определении доступа в spring-security
  */
 public class Role {
 
