@@ -1,6 +1,6 @@
 # КЛИНИКА ДОМАШНИХ ЖИВОТНЫХ
 
-UPD: Новая ветка проекта [Клиника домашних животных #2](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
+UPD: Новая ветка проекта [Клиника домашних животных #2](https://github.com/maks-sl/JavaPetClinic/tree/IocDI%2BHibernateTemplate%2BMVC%2BSecurity)
 <br>
 
 Является одним из заданий [Обучающего курса Java](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
