@@ -1,9 +1,11 @@
 # КЛИНИКА ДОМАШНИХ ЖИВОТНЫХ
 
+UPD: Новая ветка проекта [Клиника домашних животных #2](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
+<br>
+
 Является одним из заданий [Обучающего курса Java](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
 <br>
-Другие выполненные мной задания этого курса [здесь](https://github.com/maks-sl/JavaLessons)
-
+Другие выполненные задания этого курса [здесь](https://github.com/maks-sl/JavaLessons)
 
 <p>Предназначена для хранения клиентов клиники и их питомцев.
 <br>Доступные виды питомцев: кошка, собака, другое животное.
@@ -38,4 +40,5 @@
 
 ![Внешний вид](demo/clientEdit.png)
 ![Внешний вид](demo/addPet.png)
+
 
