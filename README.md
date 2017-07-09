@@ -20,3 +20,7 @@
 <p>Внешний вид приложения:</p>
 
 ![Внешний вид](demo/view.png)
+
+Является одним из заданий [Обучающего курса Java](https://www.youtube.com/playlist?list=PLW8mAQ8rFUhKFkuXDTb3PT1GKz0T-lCv6)
+<br>
+Мое прохождение курса [здесь](https://github.com/maks-sl/JavaLessons)
