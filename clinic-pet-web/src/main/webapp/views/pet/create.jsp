@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -15,7 +16,14 @@
 <div id="MAIN_SITE">
     <div id="HEADER">
         <div id="HEAD_SPACE">
-            <img src="${pageContext.servletContext.contextPath}/images/head_bg.png" alt="Clinic Pet Web" />
+            <img src="${pageContext.servletContext.contextPath}/images/head_animals.png" alt="Clinic Pet Web" />
+            <div id="AUTH_INF">
+                <form id="logoutBtn" action="${pageContext.servletContext.contextPath}/logout">
+                    <button class="submit" type="submit">Logout</button>
+                </form>
+                <p>Login as: </p>
+                <p><sec:authentication property="name" /> <sec:authentication property="authorities" /></p>
+            </div>
         </div>
         <!-- <div id="HEAD_TOP"></div> -->
         <!-- <div id="HEAD_BOTTOM"></div> -->

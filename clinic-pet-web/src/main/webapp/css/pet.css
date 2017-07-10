@@ -72,11 +72,36 @@ body {
 			background: rgba(240,236,219,0.92);
 		}
 		#HEAD_SPACE img{
-
+			z-index: 3;
 			position: absolute;
-			top: -12px;
-			right: 109px;
+			top: -35px;
+			right: 260px;
 		}
+
+		#HEAD_SPACE #AUTH_INF{
+			position: absolute;
+			width: 200px;
+			height: 45px;
+			right: 20px;
+			top: 20px;
+			background: white;
+			padding: 10px;
+			padding-right: 50px;
+			padding-left: 30px;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			-webkit-box-shadow: 5px 5px 5px rgba(50, 50, 50, 0.5);
+			-moz-box-shadow:    5px 5px 5px rgba(50, 50, 50, 0.5);
+			box-shadow:         5px 5px 5px rgba(50, 50, 50, 0.5);
+		}
+
+			#AUTH_INF #logoutBtn {
+				 position: absolute; z-index: 1; top: 5px; right: 5px
+			 }
+
+
+
 		#HEAD_BOTTOM{
 			position: absolute;
 			height: 3px;
@@ -370,7 +395,36 @@ body {
 .filled_form input:focus + .form_hint {display: inline;}
 .filled_form input:required:valid + .form_hint {background: #28921f;}
 .filled_form input:required:valid + .form_hint::before {color:#28921f;}
-	
+
+/* === login_form === */
+
+.login_form ul {
+	position: absolute;
+	width:330px;
+	top: 70px;
+	right: 0;
+	left: 0;
+	margin:auto;
+}
+
+.login_form li{
+	padding-top:5px;
+}
+
+.login_form li:last-child {
+	border-bottom:none;
+}
+
+.login_form label {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+.login_form button {
+	margin-left:0; margin-top: 6px;
+}
+
+
 /* === Button Style === */
 button.submit {
 	background-color: #68b12f;
